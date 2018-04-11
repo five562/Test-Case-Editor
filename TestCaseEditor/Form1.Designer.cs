@@ -45,7 +45,6 @@
             this.dateTextBox = new System.Windows.Forms.TextBox();
             this.passFailComboBox = new System.Windows.Forms.ComboBox();
             this.testCaseIdLabel = new System.Windows.Forms.Label();
-            this.testCaseIdTextBox = new System.Windows.Forms.TextBox();
             this.stepLabel = new System.Windows.Forms.Label();
             this.stepRichTextBox = new System.Windows.Forms.RichTextBox();
             this.expectationLabel = new System.Windows.Forms.Label();
@@ -54,6 +53,7 @@
             this.commentRichTextBox = new System.Windows.Forms.RichTextBox();
             this.saveButton = new System.Windows.Forms.Button();
             this.getButton = new System.Windows.Forms.Button();
+            this.testCaseIdComboBox = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // testCaseEditorLabel
@@ -95,8 +95,6 @@
             // projectNameComboBox
             // 
             this.projectNameComboBox.FormattingEnabled = true;
-            //setComboBoxList("C:\\TestCases", this.projectNameComboBox);
-            //this.projectNameComboBox.Items.AddRange(new object[] {"Project1", "Project2", "Project3"});
             this.projectNameComboBox.Location = new System.Drawing.Point(113, 40);
             this.projectNameComboBox.Name = "projectNameComboBox";
             this.projectNameComboBox.Size = new System.Drawing.Size(342, 21);
@@ -106,7 +104,6 @@
             // versionComboBox
             // 
             this.versionComboBox.FormattingEnabled = true;
-            //this.versionComboBox.Items.AddRange(new object[] {"Version1","Version2","Version3"});
             this.versionComboBox.Location = new System.Drawing.Point(113, 71);
             this.versionComboBox.Name = "versionComboBox";
             this.versionComboBox.Size = new System.Drawing.Size(342, 21);
@@ -116,7 +113,6 @@
             // moduleComboBox
             // 
             this.moduleComboBox.FormattingEnabled = true;
-            //this.moduleComboBox.Items.AddRange(new object[] {"Module1","Module2","Module3",});
             this.moduleComboBox.Location = new System.Drawing.Point(113, 101);
             this.moduleComboBox.Name = "moduleComboBox";
             this.moduleComboBox.Size = new System.Drawing.Size(342, 21);
@@ -131,7 +127,6 @@
             this.createdByLabel.Size = new System.Drawing.Size(59, 13);
             this.createdByLabel.TabIndex = 8;
             this.createdByLabel.Text = "Created By";
-            this.createdByLabel.Click += new System.EventHandler(this.createdByLabel_Click);
             // 
             // executedByLabel
             // 
@@ -163,23 +158,27 @@
             // createdByComboBox
             // 
             this.createdByComboBox.FormattingEnabled = true;
-            this.createdByComboBox.Items.AddRange(new object[] {"Name1","Name2","Name3"});
-            this.createdByComboBox.Location = new System.Drawing.Point(575, 35);
+            this.createdByComboBox.Items.AddRange(new object[] {
+            "Name1",
+            "Name2",
+            "Name3"});
+            this.createdByComboBox.Location = new System.Drawing.Point(575, 40);
             this.createdByComboBox.Name = "createdByComboBox";
             this.createdByComboBox.Size = new System.Drawing.Size(184, 21);
             this.createdByComboBox.TabIndex = 12;
-            this.createdByComboBox.SelectedIndexChanged += new System.EventHandler(this.createdByComboBox_SelectedIndexChanged);
             // 
             // executedByComboBox
             // 
             this.executedByComboBox.Enabled = false;
             this.executedByComboBox.FormattingEnabled = true;
-            this.executedByComboBox.Items.AddRange(new object[] {"Tester1","Tester2","Tester3"});
+            this.executedByComboBox.Items.AddRange(new object[] {
+            "Tester1",
+            "Tester2",
+            "Tester3"});
             this.executedByComboBox.Location = new System.Drawing.Point(575, 70);
             this.executedByComboBox.Name = "executedByComboBox";
             this.executedByComboBox.Size = new System.Drawing.Size(184, 21);
             this.executedByComboBox.TabIndex = 13;
-            this.executedByComboBox.SelectedIndexChanged += new System.EventHandler(this.executedByComboBox_SelectedIndexChanged);
             // 
             // dateTextBox
             // 
@@ -194,7 +193,7 @@
             // 
             this.passFailComboBox.Enabled = false;
             this.passFailComboBox.FormattingEnabled = true;
-            this.passFailComboBox.Items.AddRange(new string[] {
+            this.passFailComboBox.Items.AddRange(new object[] {
             "Pass",
             "Failed",
             " "});
@@ -202,7 +201,6 @@
             this.passFailComboBox.Name = "passFailComboBox";
             this.passFailComboBox.Size = new System.Drawing.Size(121, 21);
             this.passFailComboBox.TabIndex = 15;
-            this.passFailComboBox.SelectedIndexChanged += new System.EventHandler(this.passFailComboBox_SelectedIndexChanged);
             // 
             // testCaseIdLabel
             // 
@@ -212,14 +210,6 @@
             this.testCaseIdLabel.Size = new System.Drawing.Size(69, 13);
             this.testCaseIdLabel.TabIndex = 16;
             this.testCaseIdLabel.Text = "Test Case ID";
-            // 
-            // testCaseIdTextBox
-            // 
-            this.testCaseIdTextBox.Location = new System.Drawing.Point(887, 40);
-            this.testCaseIdTextBox.Name = "testCaseIdTextBox";
-            this.testCaseIdTextBox.Size = new System.Drawing.Size(206, 20);
-            this.testCaseIdTextBox.TabIndex = 17;
-            this.testCaseIdTextBox.TextChanged += new System.EventHandler(this.testCaseIdTextBox_TextChanged);
             // 
             // stepLabel
             // 
@@ -239,7 +229,6 @@
             this.stepRichTextBox.Size = new System.Drawing.Size(413, 571);
             this.stepRichTextBox.TabIndex = 19;
             this.stepRichTextBox.Text = "";
-            this.stepRichTextBox.TextChanged += new System.EventHandler(this.stepRichTextBox_TextChanged);
             // 
             // expectationLabel
             // 
@@ -269,7 +258,6 @@
             this.expectationRichTextBox.Size = new System.Drawing.Size(393, 571);
             this.expectationRichTextBox.TabIndex = 22;
             this.expectationRichTextBox.Text = "";
-            this.expectationRichTextBox.TextChanged += new System.EventHandler(this.expectationRichTextBox_TextChanged);
             // 
             // commentRichTextBox
             // 
@@ -279,7 +267,6 @@
             this.commentRichTextBox.Size = new System.Drawing.Size(398, 571);
             this.commentRichTextBox.TabIndex = 23;
             this.commentRichTextBox.Text = "";
-            this.commentRichTextBox.TextChanged += new System.EventHandler(this.commentRichTextBox_TextChanged);
             // 
             // saveButton
             // 
@@ -301,11 +288,21 @@
             this.getButton.UseVisualStyleBackColor = true;
             this.getButton.Click += new System.EventHandler(this.getButton_Click);
             // 
+            // testCaseIdComboBox
+            // 
+            this.testCaseIdComboBox.FormattingEnabled = true;
+            this.testCaseIdComboBox.Location = new System.Drawing.Point(888, 40);
+            this.testCaseIdComboBox.Name = "testCaseIdComboBox";
+            this.testCaseIdComboBox.Size = new System.Drawing.Size(249, 21);
+            this.testCaseIdComboBox.TabIndex = 26;
+            this.testCaseIdComboBox.SelectedIndexChanged += new System.EventHandler(this.testCaseIdComboBox_SelectedIndexChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1408, 783);
+            this.Controls.Add(this.testCaseIdComboBox);
             this.Controls.Add(this.getButton);
             this.Controls.Add(this.saveButton);
             this.Controls.Add(this.commentRichTextBox);
@@ -314,7 +311,6 @@
             this.Controls.Add(this.expectationLabel);
             this.Controls.Add(this.stepRichTextBox);
             this.Controls.Add(this.stepLabel);
-            this.Controls.Add(this.testCaseIdTextBox);
             this.Controls.Add(this.testCaseIdLabel);
             this.Controls.Add(this.passFailComboBox);
             this.Controls.Add(this.dateTextBox);
@@ -356,7 +352,6 @@
         private System.Windows.Forms.TextBox dateTextBox;
         private System.Windows.Forms.ComboBox passFailComboBox;
         private System.Windows.Forms.Label testCaseIdLabel;
-        private System.Windows.Forms.TextBox testCaseIdTextBox;
         private System.Windows.Forms.Label stepLabel;
         private System.Windows.Forms.RichTextBox stepRichTextBox;
         private System.Windows.Forms.Label expectationLabel;
@@ -365,6 +360,7 @@
         private System.Windows.Forms.RichTextBox commentRichTextBox;
         private System.Windows.Forms.Button saveButton;
         private System.Windows.Forms.Button getButton;
+        private System.Windows.Forms.ComboBox testCaseIdComboBox;
     }
 }
 

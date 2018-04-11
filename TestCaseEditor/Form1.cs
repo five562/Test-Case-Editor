@@ -23,7 +23,6 @@ namespace TestCaseEditor
         public class newTestCase
         {
             public string project;
-
             public string version;
             public string module;
             public string createdBy;
@@ -43,18 +42,12 @@ namespace TestCaseEditor
             setComboBoxList("C:\\TestCases", this.projectNameComboBox);
         }
 
-
-        private void createdByLabel_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void projectNameComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            versionComboBox.Text = "";
-            moduleComboBox.Text = "";
+            versionComboBox.Text = moduleComboBox.Text = testCaseIdComboBox.Text = "";
             versionComboBox.Items.Clear();
             moduleComboBox.Items.Clear();
+            testCaseIdComboBox.Items.Clear();
             generateFilePaths();
             setComboBoxList(filePaths["Version"][0], this.versionComboBox);
             filePaths.Clear();
@@ -63,8 +56,9 @@ namespace TestCaseEditor
 
         private void versionComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            moduleComboBox.Text = "";
+            moduleComboBox.Text = testCaseIdComboBox.Text = "";
             moduleComboBox.Items.Clear();
+            testCaseIdComboBox.Items.Clear();
             generateFilePaths();
             setComboBoxList(filePaths["Module"][0], this.moduleComboBox);
             filePaths.Clear();
@@ -73,17 +67,16 @@ namespace TestCaseEditor
 
         private void moduleComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-
-        }
-
-        private void createdByComboBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void executedByComboBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
+            testCaseIdComboBox.Text = "";
+            testCaseIdComboBox.Items.Clear();
+            generateFilePaths();
+            string[] fileDirectories = Directory.GetFiles(filePaths["TestCases"][0] + "TestCases\\");
+            foreach (string directory in fileDirectories)
+            {
+                testCaseIdComboBox.Items.Add(Path.GetFileNameWithoutExtension(directory));
+            }
+            filePaths.Clear();
+            fileName.Clear();
         }
 
         private void dateTextBox_TextChanged(object sender, EventArgs e)
@@ -91,27 +84,7 @@ namespace TestCaseEditor
 
         }
 
-        private void passFailComboBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void testCaseIdTextBox_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void stepRichTextBox_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void expectationRichTextBox_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void commentRichTextBox_TextChanged(object sender, EventArgs e)
+        private void testCaseIdComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }
@@ -143,19 +116,16 @@ namespace TestCaseEditor
             {
                 folderNameList.Add(Path.GetFileName(fileName));
             }
+            
             return folderNameList;
         }
 
         //Edit comboBox item list
         public void setComboBoxList(string directory, ComboBox comboBox)
         {
-            HashSet<string> itemsList = new HashSet<string>();
             if (Directory.Exists(directory))
             {
-                foreach (string project in processDirectory(directory))
-                {
-                    itemsList.Add(project);
-                }
+                List<string> itemsList = processDirectory(directory).ToList();
                 foreach (string item in itemsList)
                 {
                     comboBox.Items.Add(item);
@@ -172,41 +142,34 @@ namespace TestCaseEditor
             executedByComboBox.Enabled = true;
             dateTextBox.Enabled = true;
             passFailComboBox.Enabled = true;
+            filePaths.Clear();
+            fileName.Clear();
         }
 
         public void cleanTextBoxes()
         {
-            projectNameComboBox.Text = "";
+            projectNameComboBox.Text = versionComboBox.Text = moduleComboBox.Text = createdByComboBox.Text = executedByComboBox.Text = dateTextBox.Text = passFailComboBox.Text = testCaseIdComboBox.Text = stepRichTextBox.Text = expectationRichTextBox.Text = commentRichTextBox.Text = "";
             projectNameComboBox.Items.Clear();
             setComboBoxList("C:\\TestCases\\", this.projectNameComboBox);
-            versionComboBox.Text = "";
             versionComboBox.Items.Clear();
-            moduleComboBox.Text = "";
             moduleComboBox.Items.Clear();
-            createdByComboBox.Text = "";
-            executedByComboBox.Text = "";
             executedByComboBox.Enabled = false;
-            dateTextBox.Text = "";
             dateTextBox.Enabled = false;
-            passFailComboBox.Text = "";
             passFailComboBox.Enabled = false;
-            testCaseIdTextBox.Text = "";
-            stepRichTextBox.Text = "";
-            expectationRichTextBox.Text = "";
-            commentRichTextBox.Text = "";
         }
 
         public void generateFilePaths()
         {
+
             newTestCase tC = new newTestCase();
             try
             {
-                if (projectNameComboBox.Text != "" || versionComboBox.Text != "" || moduleComboBox.Text != "" && testCaseIdTextBox.Text != "")
+                if (projectNameComboBox.Text != "" || versionComboBox.Text != "" || moduleComboBox.Text != "" && testCaseIdComboBox.Text != "")
                 {
                     tC.project = projectNameComboBox.Text;
                     tC.version = versionComboBox.Text;
                     tC.module = moduleComboBox.Text;
-                    tC.testCaseId = testCaseIdTextBox.Text;
+                    tC.testCaseId = testCaseIdComboBox.Text;
 
                     filePaths.Add("Project", new string[] { "C:\\TestCases\\", "/Project" });
                     filePaths.Add("Version", new string[] { "C:\\TestCases\\" + tC.project + "\\", "/Version" });
@@ -223,7 +186,7 @@ namespace TestCaseEditor
                     fileName.Add("TestResults", tC.testCaseId);
 
                     //Generate all folders
-                    if (projectNameComboBox.Text != "" && versionComboBox.Text != "" && moduleComboBox.Text != "" && testCaseIdTextBox.Text != "")
+                    if (projectNameComboBox.Text != "" && versionComboBox.Text != "" && moduleComboBox.Text != "" && testCaseIdComboBox.Text != "")
                     {
                         System.IO.Directory.CreateDirectory(filePaths["TestCases"][0] + "TestCases\\");
                         System.IO.Directory.CreateDirectory(filePaths["TestResults"][0] + "TestResults\\");
@@ -268,31 +231,13 @@ namespace TestCaseEditor
             executedByComboBox.Text = xmlFile["executedBy"];
             dateTextBox.Text = xmlFile["date"];
             passFailComboBox.Text = xmlFile["passFail"];
-            testCaseIdTextBox.Text = xmlFile["testCaseId"];
+            testCaseIdComboBox.Text = xmlFile["testCaseId"];
             stepRichTextBox.Text = xmlFile["step"];
             expectationRichTextBox.Text = xmlFile["expectation"];
             commentRichTextBox.Text = xmlFile["comment"];
             filePaths.Clear();
             fileName.Clear();
         }
-
-        //This method will create a xml file which contains all the folders in the given path filePaths[key][0]
-        /*
-        public void generateFolderReferenceFile()
-        {
-            foreach (string key in fileName.Keys)
-            {
-                XmlDocument xmlDoc = new XmlDocument();
-                XmlElement root = xmlDoc.CreateElement(key);
-                xmlDoc.AppendChild(root);
-                XmlElement child = xmlDoc.CreateElement(fileName[key]);
-                child.InnerText = fileName[key];
-                root.AppendChild(child);
-                xmlDoc.Save(filePaths[key][0] + key + ".xml");
-            }
-
-        }
-        */
 
         private void generateTestCaseXmlFile(string xmlFilePath)
         {
@@ -332,7 +277,7 @@ namespace TestCaseEditor
                 rootElement.AppendChild(passFailElement);
                 //testCaseId elemnt
                 XmlElement testCaseIdElement = testCaseXml.CreateElement("testCaseId");
-                testCaseIdElement.InnerText = testCaseIdTextBox.Text;
+                testCaseIdElement.InnerText = testCaseIdComboBox.Text;
                 rootElement.AppendChild(testCaseIdElement);
                 //step elemnt
                 XmlElement stepElement = testCaseXml.CreateElement("step");
@@ -355,6 +300,7 @@ namespace TestCaseEditor
             }
             
         }
+
     }
 
 }
