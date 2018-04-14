@@ -111,6 +111,7 @@ namespace TestCaseEditor
         public static List<string> processDirectory(string targetDirectory)
         {
             List<string> folderNameList = new List<string>();
+            //Get all files or subfolders undert a given directory
             string[] fileEntries = Directory.GetDirectories(targetDirectory);
             foreach (string fileName in fileEntries)
             {
@@ -142,8 +143,6 @@ namespace TestCaseEditor
             executedByComboBox.Enabled = true;
             dateTextBox.Enabled = true;
             passFailComboBox.Enabled = true;
-            filePaths.Clear();
-            fileName.Clear();
         }
 
         public void cleanTextBoxes()
@@ -188,8 +187,11 @@ namespace TestCaseEditor
                     //Generate all folders
                     if (projectNameComboBox.Text != "" && versionComboBox.Text != "" && moduleComboBox.Text != "" && testCaseIdComboBox.Text != "")
                     {
-                        System.IO.Directory.CreateDirectory(filePaths["TestCases"][0] + "TestCases\\");
-                        System.IO.Directory.CreateDirectory(filePaths["TestResults"][0] + "TestResults\\");
+                        if (!Directory.Exists(filePaths["TestCases"][0] + "TestCases\\"))
+                        {
+                            System.IO.Directory.CreateDirectory(filePaths["TestCases"][0] + "TestCases\\");
+                            System.IO.Directory.CreateDirectory(filePaths["TestResults"][0] + "TestResults\\");
+                        }
                     }      
                 }
                 
@@ -221,7 +223,6 @@ namespace TestCaseEditor
 
         private void presentDataFromXmlFile()
         {
-            generateFilePaths();
             XmlParser p = new XmlParser();
             Dictionary<string, string> xmlFile = p.loadXmlFile(filePaths["TestCasePath"][0], filePaths["TestCasePath"][1]);
             projectNameComboBox.Text = xmlFile["project"];
